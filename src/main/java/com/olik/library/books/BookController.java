@@ -25,22 +25,26 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public Book getBookById(@PathVariable String id) {
-        return bookService.getBookById(id);
+    public ResponseEntity<Book> getBookById(@PathVariable String id) {
+        Book book = bookService.getBookById(id);
+        return ResponseEntity.ok().body(book);
     }
 
     @GetMapping
-    public List<Book> getAllBooks() {
-        return bookService.getAllBooks();
+    public ResponseEntity<List<Book>> getAllBooks() {
+        List<Book> books = bookService.getAllBooks();
+        return ResponseEntity.ok().body(books);
     }
 
     @PutMapping("/{id}")
-    public Book updateBook(@PathVariable String id, @RequestBody Book book) {
-        return bookService.updateBook(id, book);
+    public ResponseEntity<Book> updateBook(@PathVariable String id, @RequestBody Book book) {
+        Book updatedBook = bookService.updateBook(id, book);
+        return ResponseEntity.ok().body(updatedBook);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteBook(@PathVariable String id) {
+    public ResponseEntity<?> deleteBook(@PathVariable String id) {
         bookService.deleteBook(id);
+        return ResponseEntity.ok().build();
     }
 }
