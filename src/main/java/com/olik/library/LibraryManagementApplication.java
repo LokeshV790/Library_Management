@@ -1,6 +1,7 @@
 package com.olik.library;
 
 import com.olik.library.books.*;
+import com.olik.library.author.*;
 import com.olik.library.repository.TestRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
