@@ -12,6 +12,7 @@ public class Book {
     private String author;
     private String isbn;
     private int publicationYear;
+    private boolean rented; // New property for indicating if the book is rented or not
 
     // Constructors, getters, and setters
 
@@ -53,5 +54,13 @@ public class Book {
 
     public void setPublicationYear(int publicationYear) {
         this.publicationYear = publicationYear;
+    }
+
+    public boolean isRented() {
+        return rented;
+    }
+
+    public void setRented(boolean rented) {
+        this.rented = rented;
     }
 }

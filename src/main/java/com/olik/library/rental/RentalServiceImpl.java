@@ -3,9 +3,7 @@ package com.olik.library.rental;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -51,13 +49,41 @@ public class RentalServiceImpl implements RentalService {
                 .collect(Collectors.toList());
     }
 
+    public Rental createRental(Rental rental) {
+        // Check if the book is available for rent
+        if (!isBookAvailableForRent(rental.getBookId())) {
+            throw new RuntimeException("Book is already rented");
+        }
+
+        // Set rental date to current date
+        rental.setRentalDate(LocalDateTime.now());
+
+        // Set return date to 14 days after rental date
+        rental.setReturnDate(rental.getRentalDate().plusDays(14));
+
+        return rentalRepository.save(rental);
+    }
+
+    // Helper method to check if a book is available for rent
+    private boolean isBookAvailableForRent(String bookId) {
+        List<Rental> activeRentals = rentalRepository.findByBookIdAndReturnedFalse(bookId);
+        return activeRentals.isEmpty();
+    }
+
+
     @Override
     public void returnBook(String id) {
-        Rental rental = rentalRepository.findById(id).orElse(null);
-        if (rental != null) {
-            // Perform logic to mark the book as returned, e.g., update returnDate
-            rental.setReturned(true);
-            rentalRepository.save(rental);
-        }
+        Rental rental = rentalRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Rental not found"));
+
+        // Mark the book as returned by updating the return date
+        rental.setReturned(true);
+        rentalRepository.save(rental);
+    }
+    
+    // Helper method to check if a rental is overdue
+    private boolean isRentalOverdue(Rental rental) {
+        LocalDateTime currentDate = LocalDateTime.now();
+        return rental.getReturnDate().isBefore(currentDate);
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Document(collection = "rentals")
 public class Rental {
@@ -44,8 +45,8 @@ public class Rental {
         return rentalDate;
     }
 
-    public void setRentalDate(LocalDateTime rentalDate) {
-        this.rentalDate = rentalDate;
+    public void setRentalDate(LocalDateTime date) {
+        this.rentalDate = date;
     }
 
     public LocalDateTime getReturnDate() {
@@ -63,4 +64,6 @@ public class Rental {
     public void setReturned(boolean returned) {
         this.returned = returned;
     }
+    
+    
 }

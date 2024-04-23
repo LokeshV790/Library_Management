@@ -15,4 +15,6 @@ public interface RentalService {
     void returnBook(String id);
     
     List<Rental> getOverdueRentals();
+
+	Rental createRental(Rental rental);
 }

@@ -47,4 +47,19 @@ public class BookController {
         bookService.deleteBook(id);
         return ResponseEntity.ok().build();
     }
+    
+    @GetMapping("/author/{author}")
+    public List<Book> getBooksByAuthor(@PathVariable String author) {
+        return bookService.getBooksByAuthor(author);
+    }
+
+    @GetMapping("/available")
+    public List<Book> getAvailableBooks() {
+        return bookService.getAvailableBooks();
+    }
+
+    @GetMapping("/rented")
+    public List<Book> getRentedBooks() {
+        return bookService.getRentedBooks();
+    }
 }
